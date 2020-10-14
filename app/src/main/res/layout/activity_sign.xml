@@ -70,7 +70,8 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="회원가입할 비밀번호를 입력해주세요"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
+
         app:layout_constraintEnd_toEndOf="@+id/sign_id"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />

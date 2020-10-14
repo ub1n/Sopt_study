@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         login_check.setChecked(App.prefs.myCheckbox)
         id_check.setChecked(App.prefs.myCheckId)
         pw_check.setChecked(App.prefs.myCheckPw)
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val id=App.prefs.loginId
             val pw=App.prefs.loginPw
 
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LinearActivity::class.java)
             this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             this.finish()
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             App.prefs.loginPw=pw_edit.text.toString() //pw 상태저장
             val id = id_edit.text.toString()
             val pw = pw_edit.text.toString()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LinearActivity::class.java)
             this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             this.finish()
 
@@ -53,10 +54,22 @@ class MainActivity : AppCompatActivity() {
         reg_button.setOnClickListener {
 
             val intent = Intent(this, SignActivity::class.java)
-            startActivity(intent)
-            finish()
+            startActivityForResult(intent,100)
+
         }
 
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode ==RESULT_OK) {
+            when (requestCode) {
+                100 -> {
+
+                    id_edit.setText(data!!.getStringExtra("id").toString())
+                    pw_edit.setText( data!!.getStringExtra("pw").toString())
+                }
+            }
+        }
     }
 
 }
