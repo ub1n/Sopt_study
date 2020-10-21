@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val id=App.prefs.loginId
             val pw=App.prefs.loginPw
 
-            val intent = Intent(this, LinearActivity::class.java)
+            val intent = Intent(this, SampleActivity::class.java)
             this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             this.finish()
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             App.prefs.loginPw=pw_edit.text.toString() //pw 상태저장
             val id = id_edit.text.toString()
             val pw = pw_edit.text.toString()
-            val intent = Intent(this, LinearActivity::class.java)
+            val intent = Intent(this, SampleActivity::class.java)
             this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             this.finish()
 
