@@ -81,6 +81,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
  ## 2주차 과제
  ### <필수과제 - 화면 완성>
  클릭 시 상세화면 구현, 상세화면에서 정보 보여주기
+ 
  ###SampleAdapter - onBindViewHolder
  ```
  holder.itemView.setOnClickListener {view->
@@ -95,6 +96,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
  ```
  다음과같이 onClick을 구현하고 SampleTouchActivity에서 값을 받는다
+ 
  ###SampleTouchActivity
  ```
  var title = getIntent().getStringExtra("title")
@@ -111,6 +113,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 ```
 ### <성장 과제 - RecyclerView GridLayout 구성>
  기본 화면을 LienearLayoutManager에서 GridLayoutManager를 사용하여 구현
+ 
  ###SampleActivity
  ```
  sample_rcv.layoutManager = GridLayoutManager(this,2)
@@ -119,6 +122,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
  
  ### <성장 과제 - onSwipe와 onMove 구현>
  onSwipe를 통해 삭제 시 액션을 구현, onMove를 통해 이동 시 액션을 구현
+ 
  ###SampleActivity
 ```
 val simpleItemTouchCallback = object :
@@ -160,6 +164,7 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
             }
 ```
 삭제되는 아이템의 포지션을 가져오고 어댑터에 구현한 remove를 호출한다
+
 ###SampleAdapter
             
 ```
