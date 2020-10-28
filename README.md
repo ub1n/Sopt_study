@@ -14,12 +14,44 @@ startActivityForResult 이용해 SignActivity에서 MainActivity로 돌아올 �
  ## 2wnck rhkwp
  ### <필수과제 - 화면 완성>
  클릭 시 상세화면 구현, 상세화면에서 정보 보여주기
- 
- ### <성장 과제 - RecyclerView GridLayout 구성>
+ ####SampleAdapter - onBindViewHolder
+ ```
+ holder.itemView.setOnClickListener {view->
+            var intent= Intent(view.context, SampleTouchActivity::class.java)
+            intent.putExtra("title",data[position].title)
+            intent.putExtra("subTitle",data[position].subTitle)
+            intent.putExtra("image",data[position].image)
+            intent.putExtra("day",data[position].day)
+            intent.putExtra("text",data[position].text)
+
+            view.context.startActivity(intent)
+        }
+ ```
+ 다음과같이 onClick을 구현하고 SampleTouchActivity에서 값을 받는다
+ ```
+ var title = getIntent().getStringExtra("title")
+        var subTitle=getIntent().getStringExtra("subTitle")
+        var image=getIntent().getIntExtra("image",0)
+        var day=getIntent().getStringExtra("day")
+        var text=getIntent().getStringExtra("text")
+
+        touch_day.text=day
+        touch_title.text=title
+        touch_subtitle.text=subTitle
+        touch_text.text=text
+        touch_image.setImageResource(image)
+```
+### <성장 과제 - RecyclerView GridLayout 구성>
  기본 화면을 LienearLayoutManager에서 GridLayoutManager를 사용하여 구현
+ ####SampleActivity
+ ```
+ sample_rcv.layoutManager = GridLayoutManager(this,2)
+ ```
+ 뒤에 2를 넣어서 2칸씩 나오도록 구현
  
  ### <성장 과제 - onSwipe와 onMove 구현>
  onSwipe를 통해 삭제 시 액션을 구현, onMove를 통해 이동 시 액션을 구현
+ ####SampleActivity
 ```
 val simpleItemTouchCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -60,6 +92,7 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
             }
 ```
 삭제되는 아이템의 포지션을 가져오고 어댑터에 구현한 remove를 호출한다
+####SampleAdapter
             
 ```
 fun remove(position:Int){
