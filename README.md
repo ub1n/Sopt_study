@@ -5,7 +5,7 @@ SignActivity로 구현, 빈칸이 있을 경우 Toast메시지 출력
 비밀번호 * 표기 완료
 ### <성장 과제- StartActivityForResult>
 startActivityForResult 이용해 SignActivity에서 MainActivity로 돌아올 경우 회원 가입한 id,pw값 그대로 출력 
-####MainActivity
+*MainActivity
 ```
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -23,7 +23,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 미리 지정한 100의 값이 오면 SignActivity에서 온것으로 간주하고 위의 코드를 실행
 ### <성장 과제 2 - SharedPreferences()>
  MySharedPreference.kt에 SharedPreferences()값을 저장  
- ####MySharedPreferences.kt
+ *MySharedPreferences.kt
  ```
  class MySharedPreferences(context: Context) {
 
@@ -51,7 +51,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 }
 ```
  App.kt에 SharedPreferences()초기화  
- ####App.kt
+ *App.kt
  ```
  class App: Application() {
     companion object{
@@ -81,7 +81,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
  ## 2주차 과제
  ### <필수과제 - 화면 완성>
  클릭 시 상세화면 구현, 상세화면에서 정보 보여주기
- ####SampleAdapter - onBindViewHolder
+ *SampleAdapter - onBindViewHolder
  ```
  holder.itemView.setOnClickListener {view->
             var intent= Intent(view.context, SampleTouchActivity::class.java)
@@ -95,6 +95,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
  ```
  다음과같이 onClick을 구현하고 SampleTouchActivity에서 값을 받는다
+ *SampleTouchActivity
  ```
  var title = getIntent().getStringExtra("title")
         var subTitle=getIntent().getStringExtra("subTitle")
@@ -110,7 +111,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 ```
 ### <성장 과제 - RecyclerView GridLayout 구성>
  기본 화면을 LienearLayoutManager에서 GridLayoutManager를 사용하여 구현
- ####SampleActivity
+ *SampleActivity
  ```
  sample_rcv.layoutManager = GridLayoutManager(this,2)
  ```
@@ -118,7 +119,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
  
  ### <성장 과제 - onSwipe와 onMove 구현>
  onSwipe를 통해 삭제 시 액션을 구현, onMove를 통해 이동 시 액션을 구현
- ####SampleActivity
+ *SampleActivity
 ```
 val simpleItemTouchCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -159,7 +160,7 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
             }
 ```
 삭제되는 아이템의 포지션을 가져오고 어댑터에 구현한 remove를 호출한다
-####SampleAdapter
+*SampleAdapter
             
 ```
 fun remove(position:Int){
