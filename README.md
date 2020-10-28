@@ -58,21 +58,21 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
 
 
             }
-            ```
-            삭제되는 아이템의 포지션을 가져오고 어댑터에 구현한 remove를 호출한다
+```
+삭제되는 아이템의 포지션을 가져오고 어댑터에 구현한 remove를 호출한다
             
-            ```
-            fun remove(position:Int){
-        data.removeAt(position)
-        notifyItemRemoved(position)
-    }
-    fun onItemMoved(from:Int,to:Int){
-        if(from==to){
-            return
-        }
-        val fromItem=data.removeAt(from)
-        data.add(to,fromItem)
-        notifyItemMoved(from,to)
-    }
-    ```
-    어댑터에 다음과같이 추가적으로 함수를 구현해준다.
+```
+fun remove(position:Int){
+ data.removeAt(position)
+ notifyItemRemoved(position)
+ }
+fun onItemMoved(from:Int,to:Int){
+     if(from==to){
+         return
+     }
+     val fromItem=data.removeAt(from)
+     data.add(to,fromItem)
+     notifyItemMoved(from,to)
+ }
+ ```
+어댑터에 다음과같이 추가적으로 함수를 구현해준다.
