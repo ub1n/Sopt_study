@@ -5,13 +5,80 @@ SignActivity로 구현, 빈칸이 있을 경우 Toast메시지 출력
 비밀번호 * 표기 완료
 ### <성장 과제- StartActivityForResult>
 startActivityForResult 이용해 SignActivity에서 MainActivity로 돌아올 경우 회원 가입한 id,pw값 그대로 출력 
+####MainActivity
+```
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode ==RESULT_OK) {
+            when (requestCode) {
+                100 -> {
+
+                    id_edit.setText(data!!.getStringExtra("id").toString())
+                    pw_edit.setText( data!!.getStringExtra("pw").toString())
+                }
+            }
+        }
+    }
+```
+미리 지정한 100의 값이 오면 SignActivity에서 온것으로 간주하고 위의 코드를 실행
 ### <성장 과제 2 - SharedPreferences()>
  MySharedPreference.kt에 SharedPreferences()값을 저장  
+ ####MySharedPreferences.kt
+ ```
+ class MySharedPreferences(context: Context) {
+
+    val PREFS_FILENAME="prefs"
+    val PREF_KEY_MY_EDITTEXT="loginId"
+    val prefs:SharedPreferences=context.getSharedPreferences(PREFS_FILENAME,0)
+
+    //sahredPreferences에 저장하려는 변수, get set은 추가 지정
+    var loginId: String
+        get()= prefs.getString(PREF_KEY_MY_EDITTEXT,"")!!
+        set(value)=prefs.edit().putString(PREF_KEY_MY_EDITTEXT,value).apply()
+    var myCheckbox: Boolean
+        get()=prefs.getBoolean("myCheckbox",false)
+        set(value)=prefs.edit().putBoolean("myCheckbox",value).apply()
+    var loginPw: String
+        get()=prefs.getString("loginPw","")!!
+        set(value)=prefs.edit().putString("loginPw",value).apply()
+    var myCheckId: Boolean
+        get()=prefs.getBoolean("myCheckId",false)
+        set(value)=prefs.edit().putBoolean("myCheckId",value).apply()
+    var myCheckPw: Boolean
+        get()=prefs.getBoolean("myCheckPw",false)
+        set(value)=prefs.edit().putBoolean("myCheckPw",value).apply()
+
+}
+```
  App.kt에 SharedPreferences()초기화  
+ ####App.kt
+ ```
+ class App: Application() {
+    companion object{
+        lateinit var prefs:MySharedPreferences
+    }
+
+    override fun onCreate() {
+        prefs=MySharedPreferences(applicationContext)
+        super.onCreate()
+    }
+}
+```
  이 후 로그인 창에서 id기억,pw기억, 자동로그인 세개의 체크박스를 이용해 값 기억, 자동 로그인의 기능 구현  
- 로그인시 일단 세미나때 했던 Layout으로 가도록 임시로 구현
+ ```
+ login_check.setOnClickListener{
+            App.prefs.myCheckbox=login_check.isChecked //체크박스 상태저장
+        }
+        id_check.setOnClickListener{
+            App.prefs.myCheckId=id_check.isChecked   //이메일 체크박스 상태 저장
+        }
+        pw_check.setOnClickListener{
+            App.prefs.myCheckPw=pw_check.isChecked  //비밀번호 체크박스 상태저장
+        }
+ ```
+ 로그인시 일단 세미나때 했던 Layout으로 가도록 임시로 구현 -> 2주차: SampleActivity로 
  
- ## 2wnck rhkwp
+ ## 2주차 과제
  ### <필수과제 - 화면 완성>
  클릭 시 상세화면 구현, 상세화면에서 정보 보여주기
  ####SampleAdapter - onBindViewHolder
