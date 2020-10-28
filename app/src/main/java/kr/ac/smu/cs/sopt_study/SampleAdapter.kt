@@ -30,4 +30,16 @@ class SampleAdapter (private val context: Context):RecyclerView.Adapter<SampleVi
             view.context.startActivity(intent)
         }
     }
+    fun remove(position:Int){
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+    fun onItemMoved(from:Int,to:Int){
+        if(from==to){
+            return
+        }
+        val fromItem=data.removeAt(from)
+        data.add(to,fromItem)
+        notifyItemMoved(from,to)
+    }
 }

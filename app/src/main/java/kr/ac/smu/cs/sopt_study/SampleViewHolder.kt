@@ -12,7 +12,7 @@ class SampleViewHolder (itemview: View) : RecyclerView.ViewHolder(itemview){
     private val image: ImageView =itemview.findViewById(R.id.sample_image)
 
     fun onBind(data:SampleData){
-        title.text=data.titile
+        title.text=data.title
         subtitle.text=data.subTitle
         image.setImageResource(data.image)
     }

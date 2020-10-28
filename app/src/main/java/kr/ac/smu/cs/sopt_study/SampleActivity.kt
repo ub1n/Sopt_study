@@ -2,7 +2,9 @@ package kr.ac.smu.cs.sopt_study
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_sample.*
 
 class SampleActivity : AppCompatActivity() {
@@ -25,6 +27,56 @@ class SampleActivity : AppCompatActivity() {
 
         sampleAdapter.notifyDataSetChanged()
 
+        val simpleItemTouchCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val adapter=sample_rcv.adapter as SampleAdapter
+                adapter.onItemMoved(viewHolder!!.adapterPosition,target!!.adapterPosition)
+                //showToast("on Move")
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                // 삭제되는 아이템의 포지션을 가져온다
+                val position = viewHolder.adapterPosition
+                // 데이터의 해당 포지션을 삭제한다
+                //showToast("on remove " + mList.remove(position))
+
+                // 아답타에게 알린다
+
+                val adapter = sample_rcv.adapter as SampleAdapter
+                adapter.remove(position)
+                //mRecyclerView.adapter?.notifyItemRemoved(position)
+
+
+
+                //memoList.removeAt(position)
+                //var intent=Intent(applicationContext,MainActivity::class.java)
+                // startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+
+
+            }
+
+
+
+        }
+        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(sample_rcv)
+
+
+        /* var checkBox:CheckBox=findViewById(R.id.checkBox)
+         delbutton.setOnClickListener { view->
+             if(checkBox.isChecked)
+                 delbutton.text="선택됨"
+         }*/
 
     }
+
+
+
 }
