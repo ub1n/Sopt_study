@@ -2,6 +2,7 @@ package kr.ac.smu.cs.sopt_study
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ class SampleActivity : AppCompatActivity()  {
         sampleAdapter = SampleAdapter(this)
 
         sample_rcv.adapter = sampleAdapter
-        sample_rcv.layoutManager = LinearLayoutManager(this)
+        sample_rcv.layoutManager = GridLayoutManager(this,2)
         sampleAdapter.data = mutableListOf(
             SampleData("박건우", "두산베어스", R.drawable.img1, "2020년 10월 18일", "두산의 선수이다"),
             SampleData("김광현", "SK와이번스", R.drawable.img2, "2020년 10월 18일", "SK의 선수이다"),
@@ -27,6 +28,9 @@ class SampleActivity : AppCompatActivity()  {
         )
 
         sampleAdapter.notifyDataSetChanged()
+
+
+
 
         val simpleItemTouchCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
