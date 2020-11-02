@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_image1"
+        android:icon="@drawable/ic_me_24dp"
+
+        android:title="Me"/>
+    <item
+        android:id="@+id/bottom_image2"
+        android:icon="@drawable/ic_port_24dp"
+        android:title="PortFolio"
+        />
+    <item
+        android:id="@+id/bottom_image3"
+        android:icon="@drawable/ic_setting24dp"
+        android:title="Setting"/>
+
+</menu>

@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".SampleTouchActivity"></activity>
+        <activity android:name=".FragmentActivity"></activity>
+        <activity android:name=".SampleTouchActivity" />
         <activity android:name=".SampleActivity" />
         <activity android:name=".SignActivity" />
         <activity android:name=".RelativeActivity" />
