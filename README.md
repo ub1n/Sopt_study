@@ -185,3 +185,49 @@ fun onItemMoved(from:Int,to:Int){
  }
  ```
 어댑터에 다음과같이 추가적으로 함수를 구현해준다.
+
+ ## 3주차 과제
+ ### <필수과제 - 화면 완성 : 첫번 째 화면>
+ 프로필이 담긴 ConstraintLayout 아래 ViewPager와 TabLayout을 배치하여 첫 화면에 대한 Fragment도 두개 만들어주었다.
+ 
+ -SampleFragment.kt -> onViewCreated()
+ ```
+ override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view= inflater.inflate(R.layout.fragment_sample, container, false)
+        val viewPager=view.findViewById<ViewPager>(R.id.first_viewPager)
+        val taplayout=view.findViewById<TabLayout>(R.id.first_tab)
+        viewpagerAdapter=ViewPagerAdapter(childFragmentManager)
+        viewpagerAdapter.fragments=listOf(InfoFragment(),OtherFragment())
+        viewPager.adapter=viewpagerAdapter
+
+        taplayout.setupWithViewPager(viewPager)
+        taplayout.apply{
+            getTabAt(0)?.text="INFO"
+            getTabAt(1)?.text="OTHER"
+        }
+   ```
+   
+   일반적인 TabLayout처럼 구성하였지만 Activity와는 다르게
+   supportFragmentManager를 사용하지 않고 childFragmentManager를 사용하였다.
+   
+   ### <필수 과제 - 화면구성: 두번 째 화면>
+   두번 째 화면은 지난 2주차에 구성한 화면을 Fragment로 구성
+   기존 코드는 복붙하여 넣었지만 Activity->Fragment로 되었기에 일부 수정하였다.
+   
+   -SampleFragment2.kt
+   ```
+   val samplercv=view.findViewById<RecyclerView>(R.id.sample_rcv2)   //fragment에서는 findviewById로 가져와야함
+        sampleAdapter = SampleAdapter(view.context)
+   ```
+  
+   마찬가지로 onViewCreated 안이지만 fragment에서는 sample_rcv2를 그대로 사용할수가 없기에(그대로 사용하면 비어있다고 오류남)
+   앞서 정의한 view를 이용해 findViewById를 해준 후 사용하였다.
+   또한 this 역시 사용 불가능하기때문에 SampleAdapter에서는 view.context로 context를 반환받았다.
+   이외의 코드는 동일하다.
+   
+  
+ 
