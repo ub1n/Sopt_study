@@ -1,13 +1,24 @@
 package kr.ac.smu.cs.sopt_study
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kr.ac.smu.cs.sopt_study.Request.RequestSigninBody
+import kr.ac.smu.cs.sopt_study.Request.RequestSignupBody
+import kr.ac.smu.cs.sopt_study.Response.ResponseSigninBody
+import kr.ac.smu.cs.sopt_study.Response.ResponseSignupBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-
+    var success:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,10 +37,8 @@ class MainActivity : AppCompatActivity() {
         if((login_check.isChecked==true)&&(App.prefs.loginId.length!=0)){ //자동로그인
             val id=App.prefs.loginId
             val pw=App.prefs.loginPw
+            PostServer(id,pw)
 
-            val intent = Intent(this, SampleActivity::class.java)
-            this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            this.finish()
 
         }
         login_check.setOnClickListener{
@@ -46,18 +55,17 @@ class MainActivity : AppCompatActivity() {
             App.prefs.loginPw=pw_edit.text.toString() //pw 상태저장
             val id = id_edit.text.toString()
             val pw = pw_edit.text.toString()
-            val intent = Intent(this, FragmentActivity::class.java)
-            this.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            this.finish()
+            PostServer(id,pw)
+
 
         }
+
         reg_button.setOnClickListener {
 
             val intent = Intent(this, SignActivity::class.java)
             startActivityForResult(intent,100)
 
         }
-
 
 
     }
@@ -72,6 +80,29 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun PostServer(email: String, password: String) {
+        val postRequest= RequestSigninBody(email,password)
+        val call =
+            RetrofitGenerator.create().postSignin(postRequest)
+        call.enqueue(object : Callback<ResponseSigninBody> {
+            override fun onResponse(call: Call<ResponseSigninBody>, response: Response<ResponseSigninBody>) {
+                if (response.isSuccessful == false) {
+                    val ob= JSONObject(response.errorBody()?.string())
+                } else {
+                    Toast.makeText(applicationContext,"로그인에 성공했습니다",Toast.LENGTH_SHORT).show()
+                    success=true
+                    val intent = Intent(applicationContext, FragmentActivity::class.java)
+                    applicationContext.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseSigninBody>, t: Throwable) {
+                Toast.makeText(applicationContext,"로그인에 실패했습니다 ",Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 }

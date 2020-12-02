@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/textView"
+        android:background="@drawable/logo_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="130dp"
         android:text="Sopt"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,22 +22,30 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
         android:text="아이디"
-        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/id_edit"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="63dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="16dp"
         android:ems="10"
+
+        android:background="@drawable/login_selected"
         android:hint="아이디를 입력해주세요"
         android:inputType="textPersonName"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -45,18 +54,24 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
         android:text="비밀번호"
-        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="@+id/id_check"
         app:layout_constraintTop_toBottomOf="@+id/id_check" />
 
     <EditText
         android:id="@+id/pw_edit"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:paddingLeft="16dp"
         android:layout_marginTop="5dp"
         android:ems="10"
+        android:background="@drawable/login_selected"
         android:hint="비밀번호를 입력해주세요"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/id_edit"
@@ -68,7 +83,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="로그인"
+
+        android:background="@drawable/login_btn"
+        android:textSize="18dp"
+        android:textColor="#FFD500"
+        android:text="LOGIN"
         app:layout_constraintEnd_toEndOf="@+id/pw_edit"
         app:layout_constraintStart_toStartOf="@+id/pw_edit"
         app:layout_constraintTop_toBottomOf="@+id/login_check" />
@@ -100,12 +119,14 @@
         app:layout_constraintStart_toStartOf="@+id/pw_check"
         app:layout_constraintTop_toBottomOf="@+id/pw_check" />
 
-    <Button
+    <TextView
         android:id="@+id/reg_button"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="회원가입"
+        android:layout_marginTop="31dp"
+        android:textStyle="bold"
+        android:textSize="12dp"
+        android:text="회원가입 하러가기"
         app:layout_constraintEnd_toEndOf="@+id/login_button"
         app:layout_constraintStart_toStartOf="@+id/login_button"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
