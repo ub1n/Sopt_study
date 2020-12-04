@@ -229,5 +229,82 @@ fun onItemMoved(from:Int,to:Int){
    또한 this 역시 사용 불가능하기때문에 SampleAdapter에서는 view.context로 context를 반환받았다.
    이외의 코드는 동일하다.
    
-  
+   
+ ## 6주차 과제
+ ### <필수과제 - 회원가입,로그인 서버연동>
+ Retrofit Generator는 배운것과 동일하게 적용하였고 이후 RetrofitService 인터페이스를 만들었다.
  
+ ```
+ interface RetrofitService {
+    @Headers("Content-Type: application/json")
+    @POST("/users/signup")
+    fun postSignup(@Body body : RequestSignupBody) : Call<ResponseSignupBody>
+
+    @Headers("Content-Type: application/json")
+    @POST("/users/signin")
+    fun postSignin(@Body body : RequestSigninBody) : Call<ResponseSigninBody>
+
+
+}
+```
+당연히 안에 body인 Request와 Call의 body인 Response는 각각 구현하였다.
+  
+이 후 회원가입이 있던 SignActivity에 다음과같이 서버 구현을 한 함수를 버튼을 누르면 실행이 되도록 추가해주었다.
+-SignActivity
+```
+private fun PostServer(email: String, password: String,userName:String) {
+        val postRequest=RequestSignupBody(email,password,userName)
+        val call =
+            RetrofitGenerator.create().postSignup(postRequest)
+        call.enqueue(object : Callback<ResponseSignupBody> {
+            override fun onResponse(call: Call<ResponseSignupBody>, response: Response<ResponseSignupBody>) {
+                if (response.isSuccessful == false) {
+                    if (response.code() == 400) {
+                        //JSONObject를 활용해서 에러 객체를 받아올 수 있다
+                        val ob=JSONObject(response.errorBody()?.string())
+
+                        Toast.makeText(applicationContext,ob.getString("message"),Toast.LENGTH_SHORT).show()
+                    } else {
+
+                    }
+                } else {
+                    Toast.makeText(applicationContext,"회원가입에 성공했습니다",Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseSignupBody>, t: Throwable) {
+                Toast.makeText(applicationContext,"회원가입에 실패했습니다 ",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+```
+response code가 400일때의 에러는 두가지가 있어서 다음과같이 400일 경우에 JSONObject를 활용하여 에러 바디에있는 에러 사유를 띄워주도록 하였다.
+ 
+마찬가지로 로그인을 위해 Main에서도 다음과같이 함수를 구현하였으며 함수 내에서 서버연동 후 Intent를 옮기는 방식으로 하였다.
+-Main Activity
+```
+private fun PostServer(email: String, password: String) {
+        val postRequest= RequestSigninBody(email,password)
+        val call =
+            RetrofitGenerator.create().postSignin(postRequest)
+        call.enqueue(object : Callback<ResponseSigninBody> {
+            override fun onResponse(call: Call<ResponseSigninBody>, response: Response<ResponseSigninBody>) {
+                if (response.isSuccessful == false) {
+                    val ob= JSONObject(response.errorBody()?.string())
+                } else {
+                    Toast.makeText(applicationContext,"로그인에 성공했습니다",Toast.LENGTH_SHORT).show()
+                    success=true
+                    val intent = Intent(applicationContext, FragmentActivity::class.java)
+                    applicationContext.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    finish()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseSigninBody>, t: Throwable) {
+                Toast.makeText(applicationContext,"로그인에 실패했습니다 ",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+```
+
