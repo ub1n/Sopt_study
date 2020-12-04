@@ -250,6 +250,7 @@ fun onItemMoved(from:Int,to:Int){
 당연히 안에 body인 Request와 Call의 body인 Response는 각각 구현하였다.
   
 이 후 회원가입이 있던 SignActivity에 다음과같이 서버 구현을 한 함수를 버튼을 누르면 실행이 되도록 추가해주었다.
+
 -SignActivity
 ```
 private fun PostServer(email: String, password: String,userName:String) {
@@ -282,6 +283,7 @@ private fun PostServer(email: String, password: String,userName:String) {
 response code가 400일때의 에러는 두가지가 있어서 다음과같이 400일 경우에 JSONObject를 활용하여 에러 바디에있는 에러 사유를 띄워주도록 하였다.
  
 마찬가지로 로그인을 위해 Main에서도 다음과같이 함수를 구현하였으며 함수 내에서 서버연동 후 Intent를 옮기는 방식으로 하였다.
+
 -Main Activity
 ```
 private fun PostServer(email: String, password: String) {
@@ -307,4 +309,66 @@ private fun PostServer(email: String, password: String) {
         })
     }
 ```
+###<성장과제 2- 카카오 웹 검색 API 추가>
+KaKao Api는 별개의 서버주소를 또 사용하기 때문에 KaKaoRetrofitGenerator와 KaKaoRetrofitService를 추가로 구현하였다.
+```
+interface KaKaoRetrofitService {
+    @Headers("Authorization: KakaoAK 06923f547440cd7014e8c066dc880462")
+    @GET("/v2/search/web")
+    fun getSearch(@Query ("query") query:String) : Call<ResponseSearchBody>
 
+}
+```
+ResponseSearchBody의 모양은 특이하여 Documents라는 데이터 클래스를 만든 후 정의해주었다.
+```
+data class ResponseSearchBody(val meta:Meta,val documents:List<Documents>)
+{
+    data class Meta(val total_count:Int,val pageable_count:Int,val is_end:Boolean)
+}
+```
+저기에 쓰이는 Meta는 한번에 구현해주었다.
+
+이 후 빈 화면이었던 Fragment3에 검색 기능을 구현하였다.
+
+-SampleFragment.kt
+
+```
+private fun PostGetServer(query:String){
+        //Retrofit 서버 연결
+        val call=KakaoRetrofitGenerator.create().getSearch(query)
+        call.enqueue(object : Callback<ResponseSearchBody>{
+            override fun onResponse(call: Call<ResponseSearchBody>?, response: Response<ResponseSearchBody>) {
+                
+                if(response?.isSuccessful==false){
+
+                    Toast.makeText(activity!!.applicationContext,"${response?.code()}",Toast.LENGTH_LONG).show()
+                }else {
+                    try {
+                        sAdapter.setGoalListItems(response?.body()?.documents!!)
+                    } catch (e: Exception) {
+                    }
+                    if (response?.body() != null) {
+                        sAdapter.setGoalListItems(response?.body()?.documents!!)
+                    }
+
+
+
+                }
+            }
+            override fun onFailure(call: Call<ResponseSearchBody>, t: Throwable) {
+
+            }
+        })
+    }
+ ```
+ 검색 이후에는 구현만 확인하기 위해서 Documents안에 있는 Title만 Recyclerview를 통해 띄워주는 것으로 하였다.
+ 검색을 누르면 리사이클러뷰에 검색 내용이 나오는데 , 이것은 위에 있는 setGoalListItems라는 함수를 Adapter에서 추가적으로 구현해주어서 가능하게하였다.
+ 
+ -SearchAdapter.kt
+ ```
+ fun setGoalListItems(goalList: List<Documents>){
+        this.goalList = goalList;
+        notifyDataSetChanged()
+    }
+ ```
+ 비록 UI는 그지같지만 구현이 된것은 확인 할 수 있었다.. 
