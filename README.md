@@ -372,3 +372,8 @@ private fun PostGetServer(query:String){
     }
  ```
  비록 UI는 그지같지만 구현이 된것은 확인 할 수 있었다.. 
+ 
+ ###PostMan 확인
+ ![KakaoTalk_20201205_131612265](https://user-images.githubusercontent.com/54489627/101233611-67703f00-36fc-11eb-8f26-0f6af03e512a.png)
+![KakaoTalk_20201205_131704373](https://user-images.githubusercontent.com/54489627/101233617-6ccd8980-36fc-11eb-847f-7ad5740e5278.png)
+
