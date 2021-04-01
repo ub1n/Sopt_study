@@ -564,3 +564,70 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         intent.type = "message/rfc822"
         startActivity(intent)
 ```
+#PJT1 - 홈페이지 구성
+##PJT1 - 프론트 엔드
+###<공통 Header구성>
+-Header
+```
+<Header>
+	<input type="button" value="홈"
+	onClick="location.href='index.html'"
+	class="headerButton" />
+```
+각 구성마다 button으로 작성, submit이 없기에 input type으로 지정하여 버튼생성
+onClick을 통해 각 페이지로 이동하게 구현
+
+###<Main 페이지 Section구성>
+```
+<section id="indexSection ">
+	<h2 class="titleText">웹 프론트엔드를 잘하고 싶은 개발자!</h2>
+	<p class="normalText">함께 개발하고 같이 성장하고싶어요<br>
+	서울시 강북구 쪽에 살고 있어요!<br></p>
+	<input type="button" value="자기소개"
+		onClick="location.href='aboutme.html'"
+		class="indexButton" />
+	<input type="button" value="내사진"
+		onClick="location.href='photo.html'"
+		class="indexButton" /><br><br>
+	<img src="images/mymap.png" width=70%/>
+</section>
+```
+title은 titleText로 클래스를 지정하여 추후 aboutme.html에서 title로 쓸 텍스트와 엮어 한번에 사용
+상세 설명 부분은 p 태그를 통해 문단 지정하고 normalText 클래스 지정하여 aboutme.html에서 내용으로 쓸 텍스트와 엮어 한번에 사용
+버튼의 형식은 헤더의 공통 부분과 같게 설정
+이미지는 width를 70%로 지정하여 화면이 변해도 유동적으로 조절되게 구현
+
+#PTJ1 - 백엔드 구현
+
+    -현재 시간을 LocalDateTime 클래스를 이용하여 구현하고 , 화면을 표시하기 위해 Fromatter를 이용하여 구현하였습니다.
+    -index.html,aboutme.html,photo.html 모두 tomcat서버를 통해 동작되도록 했습니다.
+    -naver-eclipse-formatter를 통해 코딩 컨벤션이 지켜지도록 했습니다.
+    -(미구현) 시간 텍스트 위치를 화면 정중앙에 오도록 하는 것을 아직 하지 못하였습니다.
+
+#PTJ1 - 프론트 구현
+
+   ###index.html
+        - 상단의 네비게이션 버튼들의 간격을 같게 했습니다.
+        - 모든 콘텐츠가 가운데 정렬되도록 했습니다.
+        - 버튼들에 모두 그림자 효과를 주고, 마우스 커서가 다가가면 손 모양으로 변경되게 하였습니다.
+
+   ###aboutme.html 
+        - 각 문단들의 간격 배치와 영역 간의 간격을 동일하게 유지하였습니다.
+        - 같은 수준의 태그에서 같은 글자 크기를 유지했습니다.
+    
+   ###photo.html
+        - 사진에 테두리를 만들었습니다.
+        - 동일한 이미지와 글자들은 같은 크기를 유지하게 했습니다.
+#수정사항
+    ###백엔드 구현
+        - 클래스 주석을 추가하였습니다.
+        - 경로를 상대경로로 변경하였습니다.
+        - close()를 없앴습니다.
+        - -> 스트림은 컨테이너에 의해 열리므로 닫을 책임 역시 컨테이너에 있어서 나중에 컨테이너가 직접 닫아야 할 때 예외처리가 필요할수도 있기 때문이 맞나요??
+
+   ###프론트 수정사항
+        - 경로를 상대경로로 모두 통일하였습니다.
+        - Button들을 nav를 이용한 태그로 변경하였습니다.
+        - 클래스 이름을 컨벤션에 맞게 수정하였습니다.
+        - 태그에 클래스 부여한 것들을 수정하였습니다.
+        - style 관련 작업들은 css로 모두 이관하였습니다.
